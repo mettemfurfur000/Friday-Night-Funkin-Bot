@@ -143,7 +143,7 @@ void GetCursorw() {
 
 int main() {
 
-    cout << "FNF cheats have started. make sure to have the game in full window mode.";
+    cout << "FNF bot has started. make sure to have the game in full window mode.";
 scan();
     cout << "ERROR. RELOAD THE PROGRAM NOW.";
 }
