@@ -618,6 +618,10 @@ an absolute waiver of all civil liability in connection with the
 Program, unless a warranty or assumption of liability accompanies a
 copy of the Program in return for a fee.
 
+18. Commercial Use.
+Do not sell or otherwise commercially distribute this application, 
+unless you have recieved permission from aladvs on Github.
+
                      END OF TERMS AND CONDITIONS
 
             How to Apply These Terms to Your New Programs
@@ -637,7 +641,7 @@ the "copyright" line and a pointer to where the full notice is found.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+    (at your option) any later version, without making it for profit.
 
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
