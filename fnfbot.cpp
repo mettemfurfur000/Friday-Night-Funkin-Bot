@@ -1,5 +1,3 @@
-// Friday Night Funkin' cheat.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 #include <windows.h>
 #include<thread>
 #include <iostream>
