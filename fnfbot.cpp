@@ -2,7 +2,7 @@
 #include<thread>
 #include <iostream>
 #include <tchar.h>
-void cheats() {
+void scan() {
     for (;;) {
         COLORREF color;
         int red, green, blue;
@@ -144,6 +144,6 @@ void GetCursorw() {
 int main() {
 
     cout << "FNF cheats have started. make sure to have the game in full window mode.";
-cheats();
+scan();
     cout << "ERROR. RELOAD THE PROGRAM NOW.";
 }
