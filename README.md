@@ -10,3 +10,4 @@ and just open the application from there. Make sure the game is in full view, bu
 # Issues
 It sometimes misses notes, which is just because it does it real time, and isn't precalculated.
 Monitor view only works in 1440p.
+It also is marked as a virus by windows defender, because it checks the display buffer and it really doesn't like that; I have submitted it to microsoft to get it fixed.
