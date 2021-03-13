@@ -1,11 +1,11 @@
-// Friday Night Funkin' cheat.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 #include <windows.h>
 #include<thread>
 #include <iostream>
 #include <tchar.h>
-void cheats() {
-    for (;;) {
+#include<fstream>
+bool on = false;
+void scan() {
+    while (on) {
         COLORREF color;
         int red, green, blue;
         HDC hDC = GetDC(NULL);
@@ -13,10 +13,12 @@ void cheats() {
         /*
        color = GetPixel(hDC, 1183, 109);
        */
+
         red = GetRValue(color);
         green = GetGValue(color);
         blue = GetBValue(color);
-        if (red == 194 && green == 75 && blue == 153 || red == 170 && green == 110 && blue == 161/*64*/) {
+        /*   std::cout << "\n" << red << "\n" << green << "\n" << blue << "\n";*/
+        if (red != 135 && green != 163 && blue != 173/*64*/) {
 
             INPUT ip;
             //255,210,212
@@ -32,9 +34,10 @@ void cheats() {
             ip.ki.wVk = 0x25; // virtual-key code for the "a" key
             ip.ki.dwFlags = 0; // 0 for key press
             SendInput(1, &ip, sizeof(INPUT));
-            Sleep(20);
+            Sleep(10);
             ip.ki.dwFlags = KEYEVENTF_KEYUP; // KEYEVENTF_KEYUP for key release
             SendInput(1, &ip, sizeof(INPUT));
+            Sleep(5);
         };
         color = GetPixel(hDC, 1918, 195);
         /*
@@ -43,8 +46,10 @@ void cheats() {
         red = GetRValue(color);
         green = GetGValue(color);
         blue = GetBValue(color);
+        //1089, 128
+        //1262, 136
 
-        if (red == 18 && green == 250 && blue == 5/*64*/ || red == 37 && green == 236 && blue == 32 || red == 65 && green == 215 && blue == 72) {
+        if (red != 135 && green != 163 && blue != 173/*64*/) {
 
             INPUT ip;
             //255,210,212
@@ -60,9 +65,10 @@ void cheats() {
             ip.ki.wVk = 0x26; // virtual-key code for the "a" key
             ip.ki.dwFlags = 0; // 0 for key press
             SendInput(1, &ip, sizeof(INPUT));
-            Sleep(20);
+            Sleep(10);
             ip.ki.dwFlags = KEYEVENTF_KEYUP; // KEYEVENTF_KEYUP for key release
             SendInput(1, &ip, sizeof(INPUT));
+            Sleep(5);
         };
         color = GetPixel(hDC, 1700, 195);
         /*
@@ -71,7 +77,7 @@ void cheats() {
         red = GetRValue(color);
         green = GetGValue(color);
         blue = GetBValue(color);
-        if (red == 0 && green == 255 && blue == 255/*64*/ || red == 54 && green == 218 && blue == 222 || red == 22 && green == 240 && blue == 242) {
+        if (red != 135 && green != 163 && blue != 173/*64*/) {
 
             INPUT ip;
             //255,210,212
@@ -87,20 +93,21 @@ void cheats() {
             ip.ki.wVk = 0x28; // virtual-key code for the "a" key
             ip.ki.dwFlags = 0; // 0 for key press
             SendInput(1, &ip, sizeof(INPUT));
-            Sleep(20);
+            Sleep(10);
             ip.ki.dwFlags = KEYEVENTF_KEYUP; // KEYEVENTF_KEYUP for key release
             SendInput(1, &ip, sizeof(INPUT));
+            Sleep(5);
         };
         //FOURTH ONE EEIOOEEOEOEOEO
-        color = GetPixel(hDC, 2099, 149);
+        color = GetPixel(hDC, 2130, 220);
         /*
        color = GetPixel(hDC, 1183, 109);
        */
         red = GetRValue(color);
         green = GetGValue(color);
         blue = GetBValue(color);
-
-        if (red == 249 && green == 57 && blue == 63/*64*/ || red == 101 && green == 16 && blue == 56/*64*/ || red == 203 && green == 99 && blue == 107/*64*/ || red == 230 && green == 74 && blue == 81/*64*/) {
+       /* std::cout << "\n" << red << "\n" << green << "\n" << blue << "\n";*/
+        if (red != 135 && green != 163 && blue != 173/*64*/) {
 
             INPUT ip;
             //255,210,212
@@ -116,36 +123,69 @@ void cheats() {
             ip.ki.wVk = 0x27; // virtual-key code for the "a" key
             ip.ki.dwFlags = 0; // 0 for key press
             SendInput(1, &ip, sizeof(INPUT));
-            Sleep(20);
+            Sleep(10);
             ip.ki.dwFlags = KEYEVENTF_KEYUP; // KEYEVENTF_KEYUP for key release
             SendInput(1, &ip, sizeof(INPUT));
+            Sleep(5);
         };
         /* purple:
         1183
 101
 */
-        Sleep(0);
+        Sleep(5);
         ReleaseDC(NULL, hDC);
+        if (GetAsyncKeyState(VK_INSERT) & 1)
+        {
+            std::cout << "toggled ";
+            on = !on;
+            if (on) {
+                std::cout << "on\n";
+                scan();
+            }
+            else {
+                std::cout << "off\n";
+            }
+            Sleep(5);
+        }
     }
 
 }
 int x;
 int y;
 using namespace std;
-void GetCursorw() {
-    POINT cursorPos;
-    GetCursorPos(&cursorPos);
-    int y;
-    int x;
-    x = cursorPos.x;
-    y = cursorPos.y;
-    Sleep(50);
+bool searchfortoggle = true;
 
-}
+int main()
+{
+    
+    std::ifstream f("logo.txt");
 
-int main() {
+    if (f.is_open())
+        Sleep(500);
+        std::cout << f.rdbuf() << "\n";
+    Sleep(5000);
+    cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.";
+    Sleep(1000);
+    cout << ".";
+    Sleep(1000);
+    cout << ".";
+    Sleep(1000);
+    cout << " FnFbot enabled, pres INSERT to toggle bot on/off\n(pro tip,only toggle WHEN THE HUD HAS FINISHED FADING IN.)\n";
+    
+    while (searchfortoggle) {
+        if (GetAsyncKeyState(VK_INSERT) & 1)
+        {
+            std::cout << "toggled ";
+            on = !on;
+            if (on) {
+                std::cout << "on\n";
+                scan();
+            }
+            else {
+                std::cout << "off\n";
+            }
+            Sleep(5);
+        }
+    }
 
-    cout << "FNF cheats have started. make sure to have the game in full window mode.";
-cheats();
-    cout << "ERROR. RELOAD THE PROGRAM NOW.";
 }
