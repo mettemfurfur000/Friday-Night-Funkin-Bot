@@ -1,7 +1,7 @@
 # Friday-Night-Funkin-Bot
-It's a bot that automatically plays fnf without any extra libraries! Works on 1440p monitors only, but that will change soon.
+It's a bot that automatically plays fnf without any extra libraries! Works on 1440p and 1080 monitors only.
 # Use
-To use the application, make sure you have a normal install of FNF, with any mods that do not alter the color of the arrows, or the location of them.
+To use the application, make sure you have a normal install of FNF, with any mods that do not alter the location of the arrows.
 Make sure you have a 1440p or 1080p monitor, or have a monitor larger that is set to 1440p or 1080p in windows settings. 1080p is no longer in beta.
 # Installation
 All you have to do is go to the most recent release of the application and download the .exe file that is there, and make sure you have the c++ visual redistributable 2015 downloaded
