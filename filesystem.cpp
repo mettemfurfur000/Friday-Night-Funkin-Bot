@@ -6,7 +6,7 @@
 
 void print_info(arrow &a)
 {
-    printf("[[%x,%x,%x],%d,%d,[%x]]\n", 
+    printf("[[%x%x%x],%d,%d,[%x]]\n",
     a.arrow_color.r,
     a.arrow_color.g,
     a.arrow_color.b,
@@ -21,6 +21,7 @@ size_t sizeoffile(FILE* f)
     fseek(f, 0, SEEK_END);
     l =  ftell(f);
     fseek(f, 0, SEEK_SET);
+    return l;
 }
 
 void read_file_and_print(char *filename)

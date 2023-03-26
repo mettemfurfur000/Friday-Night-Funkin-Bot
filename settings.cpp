@@ -12,9 +12,9 @@ bool work = false;
 int cps = 100; // clicks per second /checks per second
 bool close_app_NOW = false;
 
-int possible_gap = 30;
-int delay_press = 5;
-int delay_release = 5;
+int possible_gap = 20;
+int delay_press = 50;
+int delay_release = 50;
 
 void check_buttons()
 {
@@ -47,11 +47,7 @@ void check_buttons()
             set_arrow_color_from_monitor(arrows4[i]);
             //printf("Press key to bind this Arrow(single key!)\n");
             //set_associated_key(arrows4[i]); //newermind
-            printf("Arrow assigned! data:[%x,%d,%d,%x]\n",
-            arrows4[i].arrow_color,
-            arrows4[i].arrow_pos.x,
-            arrows4[i].arrow_pos.y,
-            arrows4[i].associated_key);
+            print_info(arrows4[i]);
         }
 
         arrows4[0].associated_key = VK_LEFT;

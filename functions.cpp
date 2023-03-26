@@ -5,6 +5,16 @@ using namespace std;
 
 #define KEYEVENTF_KEYDOWN 0x0000
 
+const COLORREF rgbRed = 0x000000FF;
+
+position_2d make_pos(POINT p)
+{
+    position_2d s;
+    s.x = p.x;
+    s.y = p.y;
+    return s;
+}
+
 color make_color(COLORREF c)
 {
     color p;
@@ -25,6 +35,15 @@ bool is_almost_the_same_color(color val, color must_be, int &pos_gap)
     return interval(val.r, must_be.r, pos_gap) &&
            interval(val.g, must_be.g, pos_gap) &&
            interval(val.b, must_be.b, pos_gap);
+}
+
+void draw_cross(HDC &hDC, position_2d p, COLORREF color)
+{
+    const int dist = 10;
+    SetPixel(hDC, p.x - dist, p.y, color);
+    SetPixel(hDC, p.x + dist, p.y, color);
+    SetPixel(hDC, p.x, p.y - dist, color);
+    SetPixel(hDC, p.x, p.y + dist, color);
 }
 
 void update_key_state(WORD key, int delay, DWORD flag)
@@ -73,30 +92,44 @@ void scan_and_do(arrow arrows4[4], int &possible_gap, int &delay_btw, int &dealy
 
 void set_arrow_pos(arrow &a)
 {
+    HDC hDC = GetDC(NULL);
     POINT p;
 
     while (!(GetAsyncKeyState(VK_END) & 1))
+    {
+        GetCursorPos(&p);
+        draw_cross(hDC, make_pos(p), rgbRed);
         Sleep(15);
+    }
 
     GetCursorPos(&p);
     a.arrow_pos.x = (int)p.x;
     a.arrow_pos.y = (int)p.y;
+    ReleaseDC(NULL, hDC);
 }
 
 void set_arrow_color_from_monitor(arrow &a)
 {
-    while (!(GetAsyncKeyState(VK_END) & 1))
-        Sleep(15);
-
     HDC hDC = GetDC(NULL);
-    a.arrow_color = make_color(GetPixel(hDC, a.arrow_pos.x, a.arrow_pos.y));
+    POINT p;
+
+    while (!(GetAsyncKeyState(VK_END) & 1))
+    {
+        GetCursorPos(&p);
+        draw_cross(hDC, make_pos(p), GetPixel(hDC, p.x-1, p.y-1));
+        Sleep(15);
+    }
+
+    GetCursorPos(&p);
+
+    a.arrow_color = make_color(GetPixel(hDC, p.x-1, p.y-1));
     ReleaseDC(NULL, hDC);
 }
 
 void set_associated_key(arrow &a)
 {
     Sleep(250);
-    while(1)
+    while (1)
     {
         for (int i = 0; i < 256; i++)
         {
