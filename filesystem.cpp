@@ -4,6 +4,8 @@
 #include <string>
 #include <stdio.h>
 
+const size_t b_size = 28;
+
 void read_file_and_print(char *filename)
 {
     char *buffer = 0;
@@ -42,7 +44,7 @@ int save_arrow_state(arrow &a, int index)
     obj = binn_object();
 
     // add values to it
-    binn_object_set_int32(obj, "color", a.arrow_color);
+    binn_object_set_int64(obj, "color", a.arrow_color);
     binn_object_set_int32(obj, "x", a.arrow_pos.x);
     binn_object_set_int32(obj, "y", a.arrow_pos.y);
     binn_object_set_int16(obj, "key", a.associated_key);
@@ -54,7 +56,7 @@ int save_arrow_state(arrow &a, int index)
     if (!pFile)
         return 1; // error with file
 
-    fwrite(binn_ptr(obj), 1, binn_size(obj), pFile);
+    fwrite(binn_ptr(obj), 1, b_size, pFile);
     // close arrowData file
     fclose(pFile);
     // release the object
@@ -77,11 +79,11 @@ int load_arrow_state(arrow &a, int index)
     // create a new object
     obj = binn_object();
 
-    fread(obj, 1, sizeof(arrow), pFile);
+    fread(obj, 1, b_size, pFile);
 
     // add values to it
 
-    a.arrow_color = binn_object_int32(obj, "color");
+    a.arrow_color = binn_object_int64(obj, "color");
     a.arrow_pos.x = binn_object_int32(obj, "x");
     a.arrow_pos.y = binn_object_int32(obj, "y");
     a.associated_key = binn_object_int16(obj, "key");

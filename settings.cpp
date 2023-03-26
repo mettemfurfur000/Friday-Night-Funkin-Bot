@@ -45,7 +45,7 @@ void check_buttons()
             set_arrow_pos(arrows4[i]);
             printf("Move the cursor on the arrow with needed color and press the \"End\" key to set Arrow Color\n");
             set_arrow_color_from_monitor(arrows4[i]);
-            printf("Press key to bind this Arrow\n");
+            printf("Press key to bind this Arrow(single key!)\n");
             set_associated_key(arrows4[i]);
             printf("Arrow assigned! data:[%x,%d,%d,%d]\n",
             arrows4[i].arrow_color,

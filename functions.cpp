@@ -66,7 +66,8 @@ void set_arrow_pos(arrow &a)
 {
     POINT p;
 
-    while (!(GetAsyncKeyState(VK_END) & 1)) Sleep(15);
+    while (!(GetAsyncKeyState(VK_END) & 1))
+        Sleep(15);
 
     GetCursorPos(&p);
     a.arrow_pos.x = p.x;
@@ -75,7 +76,8 @@ void set_arrow_pos(arrow &a)
 
 void set_arrow_color_from_monitor(arrow &a)
 {
-    while (!(GetAsyncKeyState(VK_END) & 1)) Sleep(15);
+    while (!(GetAsyncKeyState(VK_END) & 1))
+        Sleep(15);
 
     HDC hDC = GetDC(NULL);
     COLORREF pixel_from_monitor = GetPixel(hDC, a.arrow_pos.x, a.arrow_pos.y);
@@ -86,12 +88,17 @@ void set_arrow_color_from_monitor(arrow &a)
 
 void set_associated_key(arrow &a)
 {
-    WORD result = 0;
-
-    do
+    Sleep(250);
+    while(1)
     {
-        Sleep(15);
         for (int i = 0; i < 256; i++)
-            result |= GetAsyncKeyState(i);
-    } while (!result);
+        {
+            if (GetAsyncKeyState(i) & 1)
+            {
+                a.associated_key = i;
+                return;
+            }
+        }
+        Sleep(15);
+    }
 }
