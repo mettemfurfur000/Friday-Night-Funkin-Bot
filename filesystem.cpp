@@ -4,7 +4,24 @@
 #include <string>
 #include <stdio.h>
 
-const size_t b_size = 30;
+void print_info(arrow &a)
+{
+    printf("[[%x,%x,%x],%d,%d,[%x]]\n", 
+    a.arrow_color.r,
+    a.arrow_color.g,
+    a.arrow_color.b,
+    a.arrow_pos.x, 
+    a.arrow_pos.y, 
+    a.associated_key);
+}
+
+size_t sizeoffile(FILE* f)
+{
+    size_t l;
+    fseek(f, 0, SEEK_END);
+    l =  ftell(f);
+    fseek(f, 0, SEEK_SET);
+}
 
 void read_file_and_print(char *filename)
 {
@@ -17,7 +34,7 @@ void read_file_and_print(char *filename)
         fseek(f, 0, SEEK_END);
         length = ftell(f);
         fseek(f, 0, SEEK_SET);
-        buffer = (char*)malloc(length);
+        buffer = (char *)malloc(length);
         if (buffer)
         {
             fread(buffer, 1, length, f);
@@ -27,7 +44,7 @@ void read_file_and_print(char *filename)
 
     if (buffer)
     {
-        printf("%s\n",buffer);
+        printf("%s\n", buffer);
     }
 
     delete[] buffer;
@@ -44,19 +61,22 @@ int save_arrow_state(arrow &a, int index)
     obj = binn_object();
 
     // add values to it
-    binn_object_set_int32(obj, "color", a.arrow_color);
+    binn_object_set_int8(obj, "r", a.arrow_color.r);
+    binn_object_set_int8(obj, "g", a.arrow_color.g);
+    binn_object_set_int8(obj, "b", a.arrow_color.b);
+
     binn_object_set_int32(obj, "x", a.arrow_pos.x);
     binn_object_set_int32(obj, "y", a.arrow_pos.y);
     binn_object_set_int16(obj, "key", a.associated_key);
 
-    printf("saving arrow, data:[%x,%d,%d,%x]\n", a.arrow_color, a.arrow_pos.x, a.arrow_pos.y, a.associated_key);
+    print_info(a);
 
     pFile = fopen(filename.c_str(), "wb");
 
     if (!pFile)
         return 1; // error with file
 
-    fwrite(binn_ptr(obj), 1, b_size, pFile);
+    fwrite(binn_ptr(obj), 1, binn_size(obj), pFile);
     // close arrowData file
     fclose(pFile);
     // release the object
@@ -79,11 +99,14 @@ int load_arrow_state(arrow &a, int index)
     // create a new object
     obj = binn_object();
 
-    fread(obj, 1, b_size, pFile);
+    fread(obj, 1, sizeoffile(pFile), pFile);
 
     // add values to it
 
-    a.arrow_color = binn_object_int32(obj, "color");
+    a.arrow_color.r = binn_object_int8(obj, "r");
+    a.arrow_color.g = binn_object_int8(obj, "g");
+    a.arrow_color.b = binn_object_int8(obj, "b");
+
     a.arrow_pos.x = binn_object_int32(obj, "x");
     a.arrow_pos.y = binn_object_int32(obj, "y");
     a.associated_key = binn_object_int16(obj, "key");
@@ -93,7 +116,7 @@ int load_arrow_state(arrow &a, int index)
     // release the object
     binn_free(obj);
 
-    printf("loaded arrow, data:[%x,%d,%d,%x]\n", a.arrow_color, a.arrow_pos.x, a.arrow_pos.y, a.associated_key);
+    print_info(a);
     return 0;
 }
 

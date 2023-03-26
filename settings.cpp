@@ -9,11 +9,11 @@ WORD exit_key = VK_DELETE;
 arrow arrows4[4];
 
 bool work = false;
-int cps = 30; // clicks per second /checks per second
+int cps = 100; // clicks per second /checks per second
 bool close_app_NOW = false;
 
-int possible_gap = 5;
-int delay_press = 10;
+int possible_gap = 30;
+int delay_press = 5;
 int delay_release = 5;
 
 void check_buttons()
