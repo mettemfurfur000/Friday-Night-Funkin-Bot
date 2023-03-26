@@ -1,4 +1,5 @@
 #include "structures.h"
+#include <stdio.h>
 
 using namespace std;
 
@@ -40,7 +41,9 @@ void arrow_press(HDC &hDC, arrow Arr, int &possible_gap, int &delay_btw, int &de
     if (is_almost_the_same_color(pixel_from_monitor, Arr.arrow_color, possible_gap))
     {
         update_key_state(Arr.associated_key, delay_btw, KEYEVENTF_KEYDOWN); // press
-    }else{
+    }
+    else
+    {
         update_key_state(Arr.associated_key, dealy_aft, KEYEVENTF_KEYUP); // release
     }
 }
@@ -82,4 +85,16 @@ void set_arrow_color_from_monitor(arrow &a)
 
     a.arrow_color = pixel_from_monitor;
     ReleaseDC(NULL, hDC);
+}
+
+void set_associated_key(arrow &a)
+{
+    printf("Press key to bind\n");
+
+    WORD result = 0;
+
+    do{
+        Sleep(15);
+        for (int i = 0; i < 256; i++) result |= GetAsyncKeyState(i);
+    } while (!result);
 }

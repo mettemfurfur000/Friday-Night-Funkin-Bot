@@ -20,6 +20,9 @@ int save_arrow_state(arrow &a, int index)
     binn_object_set_int32(obj, "y", a.arrow_pos.y);
     binn_object_set_int16(obj, "key", a.associated_key);
 
+    printf("saving arrow, data:[%x,%d,%d,%d]\n",a.arrow_color,a.arrow_pos.x,a.arrow_pos.y,a.associated_key);
+    
+
     pFile = fopen(filename.c_str(), "wb");
 
     if(!pFile) return 1; //error with file
@@ -59,6 +62,8 @@ int load_arrow_state(arrow &a, int index)
     fclose(pFile);
     // release the object
     binn_free(obj);
+
+    printf("loaded arrow, data:[%x,%d,%d,%d]\n",a.arrow_color,a.arrow_pos.x,a.arrow_pos.y,a.associated_key);
     return 0;
 }
 
