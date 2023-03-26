@@ -32,13 +32,26 @@ void check_buttons()
 
     if (GetAsyncKeyState(key_change_arrows) & 1)
     {
+        read_file_and_print("tutor.txt");
+
+        while(!(GetAsyncKeyState(VK_END) & 1)) {Sleep(35);}
+
         GetCursorPos(NULL);
         GetAsyncKeyState(VK_LBUTTON);
         for (int i = 0; i < 4; i++)
         {
             printf("Assigning %d arrow...\n", i);
+            printf("Move the cursor and press the \"End\" key to set Position\n");
             set_arrow_pos(arrows4[i]);
-            printf("Arrow[%d] = %d,%d\n", i, arrows4[i].arrow_pos.x, arrows4[i].arrow_pos.y);
+            printf("Move the cursor on the arrow with needed color and press the \"End\" key to set Arrow Color\n");
+            set_arrow_color_from_monitor(arrows4[i]);
+            printf("Press key to bind this Arrow\n");
+            set_associated_key(arrows4[i]);
+            printf("Arrow assigned! data:[%x,%d,%d,%d]\n",
+            arrows4[i].arrow_color,
+            arrows4[i].arrow_pos.x,
+            arrows4[i].arrow_pos.y,
+            arrows4[i].associated_key);
         }
     }
 }

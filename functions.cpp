@@ -65,21 +65,18 @@ void scan_and_do(arrow arrows4[4], int &possible_gap, int &delay_btw, int &dealy
 void set_arrow_pos(arrow &a)
 {
     POINT p;
-    while (1)
-    {
-        if (GetAsyncKeyState(VK_LBUTTON) & 0x01)
-        {
-            GetCursorPos(&p);
-            a.arrow_pos.x = p.x;
-            a.arrow_pos.y = p.y;
-            break;
-        }
-        Sleep(16);
-    }
+
+    while (!(GetAsyncKeyState(VK_END) & 1)) Sleep(15);
+
+    GetCursorPos(&p);
+    a.arrow_pos.x = p.x;
+    a.arrow_pos.y = p.y;
 }
 
 void set_arrow_color_from_monitor(arrow &a)
 {
+    while (!(GetAsyncKeyState(VK_END) & 1)) Sleep(15);
+
     HDC hDC = GetDC(NULL);
     COLORREF pixel_from_monitor = GetPixel(hDC, a.arrow_pos.x, a.arrow_pos.y);
 
@@ -89,12 +86,12 @@ void set_arrow_color_from_monitor(arrow &a)
 
 void set_associated_key(arrow &a)
 {
-    printf("Press key to bind\n");
-
     WORD result = 0;
 
-    do{
+    do
+    {
         Sleep(15);
-        for (int i = 0; i < 256; i++) result |= GetAsyncKeyState(i);
+        for (int i = 0; i < 256; i++)
+            result |= GetAsyncKeyState(i);
     } while (!result);
 }
