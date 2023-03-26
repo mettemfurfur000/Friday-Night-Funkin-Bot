@@ -45,13 +45,18 @@ void check_buttons()
             set_arrow_pos(arrows4[i]);
             printf("Move the cursor on the arrow with needed color and press the \"End\" key to set Arrow Color\n");
             set_arrow_color_from_monitor(arrows4[i]);
-            printf("Press key to bind this Arrow(single key!)\n");
-            set_associated_key(arrows4[i]);
-            printf("Arrow assigned! data:[%x,%d,%d,%d]\n",
+            //printf("Press key to bind this Arrow(single key!)\n");
+            //set_associated_key(arrows4[i]); //newermind
+            printf("Arrow assigned! data:[%x,%d,%d,%x]\n",
             arrows4[i].arrow_color,
             arrows4[i].arrow_pos.x,
             arrows4[i].arrow_pos.y,
             arrows4[i].associated_key);
         }
+
+        arrows4[0].associated_key = VK_LEFT;
+        arrows4[1].associated_key = VK_DOWN;
+        arrows4[2].associated_key = VK_UP;
+        arrows4[3].associated_key = VK_RIGHT;
     }
 }
