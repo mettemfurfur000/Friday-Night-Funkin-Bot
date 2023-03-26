@@ -26,7 +26,7 @@ color make_color(COLORREF c)
 
 inline bool interval(int val, int must_be, int &i)
 {
-    return ((must_be + i) <= val && val >= (must_be - i));
+    return ((must_be - i) <= val && val <= (must_be + i));
 }
 
 bool is_almost_the_same_color(color val, color must_be, int &pos_gap)
@@ -46,7 +46,7 @@ void draw_cross(HDC &hDC, position_2d p, COLORREF color)
     SetPixel(hDC, p.x, p.y + dist, color);
 }
 
-void update_key_state(WORD key, int delay, DWORD flag)
+void update_key_state(WORD key, DWORD flag)
 {
     INPUT ip;
     // Set up a generic keyboard event.
@@ -58,7 +58,6 @@ void update_key_state(WORD key, int delay, DWORD flag)
     ip.ki.wVk = key;      // virtual-key code for the key
     ip.ki.dwFlags = flag; // 0 for key press
     SendInput(1, &ip, sizeof(INPUT));
-    Sleep(delay);
 }
 
 void arrow_press(HDC &hDC, arrow Arr, int &possible_gap, int &delay_btw, int &dealy_aft)
@@ -66,13 +65,23 @@ void arrow_press(HDC &hDC, arrow Arr, int &possible_gap, int &delay_btw, int &de
     // get single pixel from monitor
     COLORREF pixel_from_monitor = GetPixel(hDC, Arr.arrow_pos.x, Arr.arrow_pos.y);
 
+    draw_cross(hDC, Arr.arrow_pos, rgbRed);
+
     if (is_almost_the_same_color(make_color(pixel_from_monitor), Arr.arrow_color, possible_gap))
     {
-        update_key_state(Arr.associated_key, delay_btw, KEYEVENTF_KEYDOWN); // press
+        if (!(GetAsyncKeyState(Arr.associated_key) & 1))
+        {
+            Sleep(delay_btw);
+            update_key_state(Arr.associated_key, KEYEVENTF_KEYDOWN); // press
+        }
     }
     else
     {
-        update_key_state(Arr.associated_key, dealy_aft, KEYEVENTF_KEYUP); // release
+        if (GetAsyncKeyState(Arr.associated_key) & 1)
+        {
+            update_key_state(Arr.associated_key, KEYEVENTF_KEYUP); // release
+            Sleep(dealy_aft);
+        }
     }
 }
 
@@ -116,13 +125,13 @@ void set_arrow_color_from_monitor(arrow &a)
     while (!(GetAsyncKeyState(VK_END) & 1))
     {
         GetCursorPos(&p);
-        draw_cross(hDC, make_pos(p), GetPixel(hDC, p.x-1, p.y-1));
+        draw_cross(hDC, make_pos(p), GetPixel(hDC, p.x - 1, p.y - 1));
         Sleep(15);
     }
 
     GetCursorPos(&p);
 
-    a.arrow_color = make_color(GetPixel(hDC, p.x-1, p.y-1));
+    a.arrow_color = make_color(GetPixel(hDC, p.x - 1, p.y - 1));
     ReleaseDC(NULL, hDC);
 }
 
