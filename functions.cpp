@@ -7,6 +7,8 @@ using namespace std;
 
 const COLORREF rgbRed = 0x000000FF;
 
+bool debug = false;
+
 position_2d make_pos(POINT p)
 {
     position_2d s;
@@ -39,6 +41,7 @@ bool is_almost_the_same_color(color val, color must_be, int &pos_gap)
 
 void draw_cross(HDC &hDC, position_2d p, COLORREF color)
 {
+    if(!debug) return;
     const int dist = 10;
     SetPixel(hDC, p.x - dist, p.y, color);
     SetPixel(hDC, p.x + dist, p.y, color);

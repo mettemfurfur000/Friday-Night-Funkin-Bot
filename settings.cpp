@@ -92,3 +92,19 @@ void check_buttons()
         arrows4[3].associated_key = VK_RIGHT;
     }
 }
+
+int exists(const char *fname)
+{
+    FILE *file;
+    if ((file = fopen(fname, "r")))
+    {
+        fclose(file);
+        return 1;
+    }
+    return 0;
+}
+
+bool check_debug_mode()
+{
+    return exists("debug.bin");
+}
