@@ -7,21 +7,39 @@
 void print_info(arrow &a)
 {
     printf("[[%x%x%x],%d,%d,[%x]]\n",
-    a.arrow_color.r,
-    a.arrow_color.g,
-    a.arrow_color.b,
-    a.arrow_pos.x, 
-    a.arrow_pos.y, 
-    a.associated_key);
+           a.arrow_color.r,
+           a.arrow_color.g,
+           a.arrow_color.b,
+           a.arrow_pos.x,
+           a.arrow_pos.y,
+           a.associated_key);
 }
 
-size_t sizeoffile(FILE* f)
+size_t sizeoffile(FILE *f)
 {
     size_t l;
     fseek(f, 0, SEEK_END);
-    l =  ftell(f);
+    l = ftell(f);
     fseek(f, 0, SEEK_SET);
     return l;
+}
+
+void read_binn_object(binn *obj, char *filename)
+{
+    FILE *f = fopen(filename, "rb");
+
+    fread(obj, 1, sizeoffile(f), f);
+
+    fclose(f);
+}
+
+void write_binn_object(binn *obj, char *filename)
+{
+    FILE *f = fopen(filename, "wb");
+
+    fwrite(binn_ptr(obj), 1, binn_size(obj), f);
+
+    fclose(f);
 }
 
 void read_file_and_print(char *filename)

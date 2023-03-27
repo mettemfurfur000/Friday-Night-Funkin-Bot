@@ -12,9 +12,37 @@ bool work = false;
 int cps = 100; // clicks per second /checks per second
 bool close_app_NOW = false;
 
-int possible_gap = 50;
+int possible_gap = 85;
 int delay_press = 1;
 int delay_release = 1;
+
+void save_settings()
+{
+    binn* obj = binn_object();
+
+    binn_object_set_int32(obj, "cps", cps);
+    binn_object_set_int32(obj, "possible_gap", possible_gap);
+    binn_object_set_int32(obj, "delay_press", delay_press);
+    binn_object_set_int32(obj, "delay_release", delay_release);
+
+    write_binn_object(obj,"settings.bin");
+
+    binn_free(obj);
+}
+
+void load_settings()
+{
+    binn* obj = binn_object();
+
+    read_binn_object(obj,"settings.bin");
+
+    cps = binn_object_int32(obj, "cps");
+    possible_gap = binn_object_int32(obj, "possible_gap");
+    delay_press = binn_object_int32(obj, "delay_press");
+    delay_release = binn_object_int32(obj, "delay_release");
+
+    binn_free(obj);
+}
 
 void check_buttons()
 {
