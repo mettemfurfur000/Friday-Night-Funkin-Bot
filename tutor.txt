@@ -3,3 +3,5 @@ screenshot of the game, and further operations to perform in the standard
 Windows photo viewer. 
 
 Take a screenshot, open it in a separate folder, and when you're ready, press the "End" key.
+
+If you do not want to start configuration mode, press the "Delete" key.

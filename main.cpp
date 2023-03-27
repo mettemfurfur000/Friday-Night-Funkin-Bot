@@ -5,6 +5,7 @@ using namespace std;
 int main()
 {
     read_file_and_print("logo.txt");
+    read_file_and_print("commands.txt");
     load_arrows(arrows4, 4);
     int delay = (int)(1000 / cps);
 

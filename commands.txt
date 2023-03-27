@@ -1,0 +1,4 @@
+"INSERT" - Switch the bot
+"DELETE" - Exit the bot and save the arrow data (if they were changed in configuration mode) / Cancel the start of configuration mode
+"HOME" - Starting the configuration mode
+"END" - Used in configuration mode

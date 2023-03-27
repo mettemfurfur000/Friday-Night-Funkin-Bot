@@ -18,23 +18,23 @@ int delay_release = 1;
 
 void save_settings()
 {
-    binn* obj = binn_object();
+    binn *obj = binn_object();
 
     binn_object_set_int32(obj, "cps", cps);
     binn_object_set_int32(obj, "possible_gap", possible_gap);
     binn_object_set_int32(obj, "delay_press", delay_press);
     binn_object_set_int32(obj, "delay_release", delay_release);
 
-    write_binn_object(obj,"settings.bin");
+    write_binn_object(obj, "settings.bin");
 
     binn_free(obj);
 }
 
 void load_settings()
 {
-    binn* obj = binn_object();
+    binn *obj = binn_object();
 
-    read_binn_object(obj,"settings.bin");
+    read_binn_object(obj, "settings.bin");
 
     cps = binn_object_int32(obj, "cps");
     possible_gap = binn_object_int32(obj, "possible_gap");
@@ -46,7 +46,7 @@ void load_settings()
 
 void check_buttons()
 {
-    if(GetAsyncKeyState(exit_key) & 1)
+    if (GetAsyncKeyState(exit_key) & 1)
     {
         close_app_NOW = true;
         printf("Bye bye! <3\n");
@@ -62,7 +62,15 @@ void check_buttons()
     {
         read_file_and_print("tutor.txt");
 
-        while(!(GetAsyncKeyState(VK_END) & 1)) {Sleep(35);}
+        while (!(GetAsyncKeyState(VK_END) & 1))
+        {
+            if (GetAsyncKeyState(VK_DELETE) & 1)
+            {
+                printf("Exited\n");
+                return;
+            }
+            Sleep(35);
+        }
 
         GetCursorPos(NULL);
         GetAsyncKeyState(VK_LBUTTON);
@@ -73,8 +81,8 @@ void check_buttons()
             set_arrow_pos(arrows4[i]);
             printf("Move the cursor on the arrow with needed color and press the \"End\" key to set Arrow Color\n");
             set_arrow_color_from_monitor(arrows4[i]);
-            //printf("Press key to bind this Arrow(single key!)\n");
-            //set_associated_key(arrows4[i]); //newermind
+            // printf("Press key to bind this Arrow(single key!)\n");
+            // set_associated_key(arrows4[i]); //newermind
             print_info(arrows4[i]);
         }
 
