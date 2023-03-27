@@ -9,12 +9,12 @@ WORD exit_key = VK_DELETE;
 arrow arrows4[4];
 
 bool work = false;
-int cps = 120; // clicks per second /checks per second
+int cps = 100; // clicks per second /checks per second
 bool close_app_NOW = false;
 
-int possible_gap = 80;
-int delay_press = 5;
-int delay_release = 5;
+int possible_gap = 50;
+int delay_press = 1;
+int delay_release = 1;
 
 void check_buttons()
 {

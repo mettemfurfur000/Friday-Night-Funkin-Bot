@@ -125,7 +125,7 @@ void set_arrow_color_from_monitor(arrow &a)
     while (!(GetAsyncKeyState(VK_END) & 1))
     {
         GetCursorPos(&p);
-        draw_cross(hDC, make_pos(p), GetPixel(hDC, p.x - 1, p.y - 1));
+        draw_cross(hDC, make_pos(p), GetPixel(hDC, p.x, p.y));
         Sleep(15);
     }
 
