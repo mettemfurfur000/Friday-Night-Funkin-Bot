@@ -3,7 +3,7 @@
 using namespace std;
 
 int main()
-{
+{    debug = check_debug_mode();
     read_file_and_print("logo.txt");
     read_file_and_print("commands.txt");
     load_arrows(arrows4, 4);
